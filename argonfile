@@ -1,0 +1,32 @@
+bool sunlight = NULL;
+int maxRand = 1000;
+int threshold = maxRand * 0.8;
+bool lastSunlight = NULL;
+int sampleTime = 5000;
+
+void setup() {
+
+}
+
+void loop() {
+    
+    // Sunlight measurements would be taken here if a 
+    // sensor was available and compared to a determined 
+    // threshold to if sunny or not.
+    if (random(maxRand) <= threshold) {
+        sunlight = true;
+    } else {
+        sunlight = false;
+    }
+    
+    if(sunlight != lastSunlight) {
+        if(sunlight == true) {
+            Particle.publish("Sunlight Status", "TRUE");
+        } else {
+            Particle.publish("Sunlight Status", "FALSE");
+        }
+    }
+    
+    lastSunlight = sunlight;
+    delay(sampleTime);
+}
